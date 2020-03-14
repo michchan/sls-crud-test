@@ -39,14 +39,14 @@ functions:
   createPost:
     handler: handler.createPost
     events:
-    - http:
-      path: /post
-      method: post
+      - http:
+          path: /post
+          method: post
 
 resources:
   Resources:
     PostsTable:
-      Type: AWS::DynamoDB::table
+      Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
         - AttributeName: "id"
