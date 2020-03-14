@@ -17,12 +17,18 @@ function response <M = unknown> (statusCode: number, message: M): APIGatewayProx
   }
 }
 
+// Post form data
+export interface FormData {
+  title: string;
+  body: string;
+}
+
 /**
  * Create a new post
  */
 export const createPost: APIGatewayProxyHandler = async (event) => {
   // Parse request body
-  const reqBody = JSON.parse(event.body)
+  const reqBody: FormData = JSON.parse(event.body)
   // Create a new post data
   const post = {
     id: uuid(),
@@ -37,7 +43,7 @@ export const createPost: APIGatewayProxyHandler = async (event) => {
     await db.put({
       TableName: postsTable,
       Item: post,
-    })
+    }).promise()
     // Response successfully
     return response(201, post)
   } catch (error) {
