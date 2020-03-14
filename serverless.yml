@@ -16,6 +16,7 @@ plugins:
 provider:
   name: aws
   region: ap-east-1
+  profile: sls-admin-test
   runtime: nodejs12.x
   apiGateway:
     minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
