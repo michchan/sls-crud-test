@@ -160,16 +160,16 @@ export const updatePost: APIGatewayProxyHandler = async (event) => {
       SET body = :body
     `,
     ExpressionAttributeValues: {
-      title,
-      body,
+      ':title': title,
+      ':body': body,
     } as UpdateItemInput['ExpressionAttributeValues'],
     ReturnValues: 'ALL_NEW'
   }
   // Process
   try {
     // Update the item in db
-    const res = await db.update(params).promise()
-    return response(200, res)
+    await db.update(params).promise()
+    return response(200, { message: "Post updated successfully" })
   } catch (error) {
     return response((error as AWSError).statusCode, error)
   }
