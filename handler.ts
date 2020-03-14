@@ -156,8 +156,9 @@ export const updatePost: APIGatewayProxyHandler = async (event) => {
     TableName: postsTable,
     ConditionExpression: 'attribute_exists(id)',
     UpdateExpression: `
-      SET title = :title,
-      SET body = :body
+      SET 
+        title = :title,
+        body = :body
     `,
     ExpressionAttributeValues: {
       ':title': title,
@@ -168,8 +169,9 @@ export const updatePost: APIGatewayProxyHandler = async (event) => {
   // Process
   try {
     // Update the item in db
-    await db.update(params).promise()
-    return response(200, { message: "Post updated successfully" })
+    const res = await db.update(params).promise()
+    // @ts-ignore: @TODO: Fix type 'Attributes' not exist
+    return response(200, res.$response.data.Attributes)
   } catch (error) {
     return response((error as AWSError).statusCode, error)
   }
